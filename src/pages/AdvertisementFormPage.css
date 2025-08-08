@@ -1,0 +1,202 @@
+/* AdvertisementFormPage.css */
+
+.advertisements-page-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.advertisement-edition {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.advertisement-edition h1 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* Estados de carregamento */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e3f2fd;
+    border-top: 4px solid #2196f3;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-container p {
+    color: #666;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Estados de erro */
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    min-height: 400px;
+}
+
+.error-message {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #ffcdd2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+.error-message h3 {
+    color: #d32f2f;
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.error-description {
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.error-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.btn-retry,
+.btn-back {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-retry {
+    background-color: #2196f3;
+    color: white;
+}
+
+.btn-retry:hover {
+    background-color: #1976d2;
+    transform: translateY(-1px);
+}
+
+.btn-back {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-back:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+.help-message {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+    text-align: left;
+    margin-top: 1.5rem;
+}
+
+.help-message p {
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+    color: #333;
+}
+
+.help-message ul {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: #666;
+}
+
+.help-message li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .advertisements-page-container {
+        flex-direction: column;
+    }
+    
+    .advertisement-edition {
+        padding: 1rem;
+    }
+    
+    .advertisement-edition h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .error-message {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .error-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .btn-retry,
+    .btn-back {
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    .loading-container {
+        padding: 2rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .advertisement-edition h1 {
+        font-size: 1.3rem;
+    }
+    
+    .error-message h3 {
+        font-size: 1.1rem;
+    }
+    
+    .help-message {
+        padding: 1rem;
+    }
+}

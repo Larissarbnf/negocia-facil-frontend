@@ -1,0 +1,271 @@
+/* RulesList.module.css */
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eff6ff 0%, #faf5ff 50%, #fdf2f8 100%);
+  padding: 24px;
+}
+
+.wrapper {
+  max-width: 1152px;
+  margin: 0 auto;
+}
+
+.main {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 32px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.titleSection h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+}
+
+.titleSection p {
+  color: #6b7280;
+  margin: 8px 0 0 0;
+}
+
+.newButton {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.newButton:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.newButton svg {
+  margin-right: 8px;
+}
+
+.searchSection {
+  margin-bottom: 24px;
+}
+
+.searchContainer {
+  position: relative;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 1000px;
+  padding: 12px 16px 12px 48px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+  ring: 2px solid #3b82f6;
+  border-color: transparent;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px 0;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loadingText {
+  margin-left: 12px;
+  color: #6b7280;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 48px 0;
+}
+
+.emptyIcon {
+  margin: 0 auto 16px;
+  color: #d1d5db;
+}
+
+.emptyText {
+  color: #6b7280;
+  font-size: 1.125rem;
+}
+
+.rulesGrid {
+  display: grid;
+  gap: 24px;
+}
+
+.ruleCard {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+  border: 1px solid rgba(229, 231, 235, 0.5);
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.ruleCard:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02);
+}
+
+.ruleContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.ruleInfo {
+  flex: 1;
+}
+
+.ruleTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.ruleTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.statusBadge {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.statusActive {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.statusInactive {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.ruleDescription {
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0 0 12px 0;
+}
+
+.ruleDate {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.ruleActions {
+  display: flex;
+  gap: 8px;
+  margin-left: 16px;
+}
+
+.actionButton {
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.editButton {
+  color: #2563eb;
+}
+
+.editButton:hover {
+  background: #eff6ff;
+}
+
+.deleteButton {
+  color: #dc2626;
+}
+
+.deleteButton:hover {
+  background: #fef2f2;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+  
+  .main {
+    padding: 20px;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .ruleContent {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .ruleActions {
+    margin-left: 0;
+    justify-content: flex-end;
+  }
+}

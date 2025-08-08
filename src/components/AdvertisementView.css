@@ -1,0 +1,251 @@
+/* Estilos para a página de visualização do anúncio */
+.advertisement-view {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.advertisement-view.loading,
+.advertisement-view.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    font-size: 18px;
+    color: #666;
+}
+
+/* Header do anúncio */
+.advertisement-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    padding: 25px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.advertisement-info h1 {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.advertisement-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.advertiser {
+    font-weight: 600;
+    color: #495057;
+}
+
+.date {
+    font-style: italic;
+}
+
+.contact-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+/* Conteúdo principal */
+.advertisement-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Seção de descrição */
+.description-section {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid #25D366;
+}
+
+.description-section h2 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.description-section p {
+    margin: 0;
+    line-height: 1.6;
+    color: #495057;
+    font-size: 16px;
+}
+
+/* Seção de produtos */
+.products-section {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.section-header h2 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* Grid de produtos */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #25D366;
+}
+
+.product-card h3 {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.product-description {
+    margin: 0 0 15px 0;
+    color: #6c757d;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.product-price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #28a745;
+    margin-bottom: 15px;
+}
+
+.no-products {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 40px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .section-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .section-header h2 {
+        font-size: 20px;
+    }
+    
+    .products-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .product-card {
+        padding: 15px;
+    }
+    
+    .product-card h3 {
+        font-size: 16px;
+    }
+    
+    .product-price {
+        font-size: 18px;
+    }
+    
+    .description-section,
+    .products-section {
+        padding: 20px;
+    }
+    
+    .description-section h2,
+    .products-section h2 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .advertisement-view {
+        padding: 10px;
+    }
+    
+    .advertisement-header {
+        padding: 20px;
+    }
+    
+    .advertisement-info h1 {
+        font-size: 22px;
+    }
+    
+    .description-section,
+    .products-section {
+        padding: 15px;
+    }
+    
+    .products-grid {
+        gap: 10px;
+    }
+    
+    .product-card {
+        padding: 12px;
+    }
+}advertisement-view {
+        padding: 15px;
+    }
+    
+    .advertisement-header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: stretch;
+    }
+    
+    .contact-section {
+        align-items: center;
+    }
+    
+    .advertisement-info h1 {
+        font-size: 24px;
+    }
+    
+    

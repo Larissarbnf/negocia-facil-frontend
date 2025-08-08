@@ -1,0 +1,244 @@
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 2rem;
+    min-height: calc(100vh - 4rem);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.header h1 {
+    color: #2c3e50;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.addButton {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.addButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.formContainer {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+}
+
+.formHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.formHeader h2 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.usersContainer {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+}
+
+.usersContainer h2 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.usersGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.userCard {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.userCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: #667eea;
+}
+
+.userInfo {
+    margin-bottom: 1rem;
+}
+
+.userInfo h3 {
+    color: #2c3e50;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+}
+
+.userEmail {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin: 0 0 0.75rem 0;
+}
+
+.userRole {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.userRole.admin {
+    background: #e8f5e8;
+    color: #2e7d2e;
+    border: 1px solid #c3e6c3;
+}
+
+.userRole.user {
+    background: #e3f2fd;
+    color: #1565c0;
+    border: 1px solid #bbdefb;
+}
+
+.userActions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+.editButton, .deleteButton {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.editButton {
+    background: #17a2b8;
+    color: white;
+}
+
+.editButton:hover {
+    background: #138496;
+    transform: translateY(-1px);
+}
+
+.deleteButton {
+    background: #dc3545;
+    color: white;
+}
+
+.deleteButton:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+.emptyState {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6c757d;
+}
+
+.emptyState p {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.accessDenied {
+    text-align: center;
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 2rem;
+    color: #856404;
+}
+
+.accessDenied h2 {
+    color: #856404;
+    margin: 0 0 1rem 0;
+}
+
+.accessDenied p {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .mainContent {
+        padding: 1rem;
+        gap: 1.5rem;
+    }
+    
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .usersGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .userActions {
+        justify-content: center;
+    }
+}

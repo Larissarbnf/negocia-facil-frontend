@@ -1,0 +1,105 @@
+/* Adicione estes estilos ao seu AdvertisementFormPage.css */
+
+/* Banner informativo do WhatsApp */
+.whatsapp-info-banner {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+    border: 1px solid #c3e6cb;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.info-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.info-content h3 {
+    margin: 0 0 5px 0;
+    color: #155724;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.info-content p {
+    margin: 0;
+    color: #155724;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Estilos para o formulário com WhatsApp */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #495057;
+    font-size: 14px;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #25D366;
+    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+}
+
+.form-hint {
+    display: block;
+    margin-top: 5px;
+    color: #6c757d;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Responsividade para o banner */
+@media (max-width: 768px) {
+    .whatsapp-info-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+    
+    .info-content h3 {
+        font-size: 15px;
+    }
+    
+    .info-content p {
+        font-size: 13px;
+    }
+}
+
+/* Animação de entrada para o banner */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.whatsapp-info-banner {
+    animation: slideInDown 0.5s ease-out;
+}

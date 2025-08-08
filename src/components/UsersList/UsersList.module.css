@@ -1,0 +1,58 @@
+.usersList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin:0;
+    width: 100%;
+    row-gap: 24px;
+}
+
+.usersList ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin:0;
+    gap: 24px;
+    width: 100%;
+}
+
+.paginationCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    height: 40px;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.pagesText {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.paginationButtons {
+    border: 1px transparent;
+    border-radius: 8px;
+    padding: 12px;
+    width: 90px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 300;
+    color: #ffffff;
+}
+
+.paginationButtons:hover {
+    cursor: pointer;
+    background-color: #eaeaea;
+    color: #151515;
+}

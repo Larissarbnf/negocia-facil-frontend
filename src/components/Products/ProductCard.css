@@ -1,0 +1,115 @@
+.card {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  max-width: 765px;
+  margin: 0 auto 24px;
+  position: relative;
+}
+
+.thumb {
+  width: 150px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;        
+}
+
+.top-row h3 {
+  color: black;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.info-row {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: #555;
+}
+
+.price {
+  font-weight: 600;
+}
+
+.qty {
+  color: #777;
+}
+
+.category {
+  color: #777;
+}
+
+.exchange {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #555;
+}
+
+.description {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #444;
+}
+
+.menu-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  color: #333;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 28px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  min-width: 120px;
+}
+
+.dropdown-menu button {
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  color: #333;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f0f0f0;
+}
