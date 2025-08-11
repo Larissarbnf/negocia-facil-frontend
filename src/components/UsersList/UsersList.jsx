@@ -12,7 +12,7 @@ function UsersList() {
     const [totalPages, setTotalPages] = useState(0);
     const size = 5;
 
-    useEffect(() => {
+    useEffect(() => {       
         axios
             .get(`http://localhost:8080/api/v1/users`, {
                 params: {

@@ -36,7 +36,7 @@ export default function Login(){
             localStorage.setItem("token", token);
             console.log("💾 Token salvo:", token);
 
-            // 🎯 CORREÇÃO 2: Verificar role do usuário e redirecionar adequadamente
+            // 🎯 CORREÇÃO 2: Verificar role do usuário e SALVAR DADOS NO LOCALSTORAGE
             try {
                 const userResponse = await axios.get("http://localhost:8080/auth/me", {
                     headers: {
@@ -46,6 +46,19 @@ export default function Login(){
 
                 console.log("👤 Dados do usuário:", userResponse.data);
                 console.log("🎭 Roles:", userResponse.data.roles);
+
+                // ✅ CORREÇÃO PRINCIPAL: SALVAR DADOS DO USUÁRIO NO LOCALSTORAGE
+                const userData = {
+                    id: userResponse.data.id,
+                    userId: userResponse.data.id,
+                    fullName: userResponse.data.fullName || userResponse.data.full_name || userResponse.data.name,
+                    email: userResponse.data.email,
+                    username: userResponse.data.username,
+                    roles: userResponse.data.roles
+                };
+                
+                localStorage.setItem("user", JSON.stringify(userData));
+                console.log("💾 Dados do usuário salvos no localStorage:", userData);
 
                 const isAdmin = userResponse.data.roles?.includes('ROLE_ADMIN');
                 

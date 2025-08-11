@@ -1,67 +1,74 @@
-/* SimpleAdvertisementCard.css */
 .user-advertisement-card {
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border: 1px solid #e1e5e9;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transition: all 0.3s ease;
     position: relative;
+    overflow: hidden;
 }
 
-.user-advertisement-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-1px);
+/* Estilos para card clicável */
+.clickable-card {
+    cursor: pointer;
+}
+
+.clickable-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    border-color: #007bff;
+}
+
+.clickable-card:active {
+    transform: translateY(0);
 }
 
 .card-content {
-    width: 100%;
+    padding: 20px;
 }
 
 .card-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 1rem;
-    gap: 1rem;
+    margin-bottom: 12px;
 }
 
 .card-title-section h2 {
-    margin: 0;
     color: #2c3e50;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 600;
+    margin: 0 0 4px 0;
 }
 
 .creation-time {
-    margin: 0.25rem 0 0 0;
     color: #7f8c8d;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
+    margin: 0;
 }
 
 .advertisement-dropdown {
     position: relative;
-    display: flex;
-    align-items: center;
+    z-index: 10;
 }
 
 .menu-trigger {
-    background: none;
+    background: transparent;
     border: none;
-    padding: 0.5rem;
-    border-radius: 4px;
     cursor: pointer;
-    color: #666;
+    padding: 8px;
+    border-radius: 6px;
+    color: #6c757d;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
 }
 
 .menu-trigger:hover {
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: #f8f9fa;
+    color: #495057;
 }
 
 .dropdown-menu {
@@ -69,25 +76,26 @@
     top: 100%;
     right: 0;
     background: white;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
     min-width: 120px;
+    z-index: 1000;
     overflow: hidden;
 }
 
 .dropdown-item {
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-    text-align: left;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: #495057;
     transition: background-color 0.2s ease;
 }
 
@@ -95,98 +103,121 @@
     background-color: #f8f9fa;
 }
 
+.edit-btn {
+    color: #007bff;
+}
+
 .edit-btn:hover {
     background-color: #e3f2fd;
-    color: #1976d2;
+    color: #0056b3;
+}
+
+.delete-btn {
+    color: #dc3545;
 }
 
 .delete-btn:hover {
-    background-color: #ffebee;
-    color: #d32f2f;
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
 .card-subinfo {
-    margin-bottom: 1rem;
+    margin-bottom: 12px;
 }
 
 .items-count {
+    color: #6c757d;
+    font-size: 0.9rem;
     margin: 0;
-    color: #34495e;
-    font-size: 0.95rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 8px;
 }
 
 .count-badge {
-    background-color: #3498db;
+    background-color: #007bff;
     color: white;
-    padding: 0.25rem 0.5rem;
+    padding: 2px 8px;
     border-radius: 12px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    min-width: 1.5rem;
+    min-width: 20px;
     text-align: center;
 }
 
 .card-description {
-    border-top: 1px solid #ecf0f1;
-    padding-top: 1rem;
+    border-top: 1px solid #f1f3f4;
+    padding-top: 12px;
 }
 
 .card-description p {
     margin: 0;
-    color: #2c3e50;
+    color: #495057;
     line-height: 1.5;
 }
 
+.card-description strong {
+    color: #2c3e50;
+}
+
 .description-text {
-    font-weight: normal;
-    color: #34495e;
-    margin-left: 0.5rem;
-    display: inline-block;
+    margin-left: 8px;
+    color: #6c757d;
 }
 
-/* Estados especiais */
-.user-advertisement-card[data-empty="true"] .count-badge {
-    background-color: #95a5a6;
+/* Indicador de clique */
+.click-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: white;
+    text-align: center;
+    padding: 6px;
+    font-size: 0.75rem;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.3s ease;
 }
 
-.user-advertisement-card[data-empty="true"] {
-    opacity: 0.8;
+.clickable-card:hover .click-indicator {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
+    .card-content {
+        padding: 16px;
+    }
+    
     .card-header {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+        gap: 12px;
     }
     
     .advertisement-dropdown {
         align-self: flex-end;
-        margin-top: -2rem;
     }
     
     .card-title-section h2 {
-        font-size: 1.2rem;
-    }
-    
-    .dropdown-menu {
-        right: 0;
-        left: auto;
+        font-size: 1.1rem;
     }
 }
 
-@media (max-width: 480px) {
-    .user-advertisement-card {
-        padding: 1rem;
-    }
-    
-    .items-count {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
-    }
+/* Estados de foco para acessibilidade */
+.clickable-card:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+.clickable-card:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Animação de loading para quando estiver navegando */
+.clickable-card.loading {
+    opacity: 0.7;
+    pointer-events: none;
 }

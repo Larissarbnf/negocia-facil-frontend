@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MoreVertical, Edit, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import './SimpleAdvertisementCard.css';
 
 function SimpleAdvertisementCard({
@@ -11,6 +12,7 @@ function SimpleAdvertisementCard({
     onDelete
 }) {
     const [showMenu, setShowMenu] = useState(false);
+    const navigate = useNavigate();
 
     const handleEdit = (e) => {
         e.stopPropagation();
@@ -40,8 +42,24 @@ function SimpleAdvertisementCard({
         setShowMenu(false);
     };
 
+    // Função para navegar para os detalhes do anúncio
+    const handleCardClick = () => {
+        console.log(`🔍 Navegando para detalhes do anúncio ID: ${id}`);
+        navigate(`/advertisements/details/${id}`);
+    };
+
     return (
-        <div className='user-advertisement-card'>
+        <div 
+            className='user-advertisement-card clickable-card'
+            onClick={handleCardClick}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    handleCardClick();
+                }
+            }}
+        >
             <div className='card-content'>
                 <div className='card-header'>
                     <div className="card-title-section">
@@ -49,11 +67,11 @@ function SimpleAdvertisementCard({
                         <p className="creation-time">Criado em {creationTime}</p>
                     </div>
                     
-                    <div 
+                    <div
                         className="advertisement-dropdown"
                         onMouseLeave={closeMenu}
                     >
-                        <button 
+                        <button
                             className="menu-trigger"
                             onClick={toggleMenu}
                             aria-label="Menu de opções"
@@ -63,14 +81,14 @@ function SimpleAdvertisementCard({
                         
                         {showMenu && (
                             <div className="dropdown-menu">
-                                <button 
+                                <button
                                     className="dropdown-item edit-btn"
                                     onClick={handleEdit}
                                 >
                                     <Edit size={14} />
                                     Editar
                                 </button>
-                                <button 
+                                <button
                                     className="dropdown-item delete-btn"
                                     onClick={handleDelete}
                                 >
@@ -81,14 +99,14 @@ function SimpleAdvertisementCard({
                         )}
                     </div>
                 </div>
-
+                
                 <div className='card-subinfo'>
                     <p className="items-count">
                         <span className="count-badge">{itemsCount || 0}</span>
                         {itemsCount === 1 ? ' item no anúncio' : ' itens no anúncio'}
                     </p>
                 </div>
-
+                
                 <div className="card-description">
                     <p>
                         <strong>Descrição:</strong> 
@@ -96,6 +114,11 @@ function SimpleAdvertisementCard({
                             {description || 'Sem descrição'}
                         </span>
                     </p>
+                </div>
+
+                {/* Indicador visual de que o card é clicável */}
+                <div className="click-indicator">
+                    <span>Clique para ver detalhes</span>
                 </div>
             </div>
         </div>

@@ -15,7 +15,11 @@ import NotFoundPage from "../pages/NotFoundPage/NotFoundPage.jsx";
 import Home from "../pages/Home.jsx";
 import AdvertisementsPage from "../pages/AdvertisementsPage.jsx";
 import { AdvertisementFormPage } from "../pages/AdvertisementFormPage.jsx";
+import AdvertisementEditPage from "../pages/AdvertisementEditPage.jsx";
 import ProductsPage from "../pages/ProductsPage.jsx";
+
+// Página de detalhes dos anúncios
+import AnunciosDetalhes from "../pages/AnunciosDetalhes.jsx";
 
 // Páginas de regras
 import RuleList from "../pages/RuleList";
@@ -43,13 +47,27 @@ export default function AppRoutes() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/products" element={<ProductsPage />} />
 
-                {/* Rotas de anúncios - ESTRUTURA CORRIGIDA */}
-                <Route path="/advertisements" element={<AdvertisementsPage />} />
-                <Route path="/advertisements/new" element={<AdvertisementFormPage />} />
-                <Route path="/advertisements/:id" element={<AdvertisementFormPage />} />
+                {/* ROTAS DE ANÚNCIOS - ORDEM CORRETA: ESPECÍFICAS PRIMEIRO */}
                 
-                {/* Rota alternativa para compatibilidade com sistema existente */}
-                <Route path="/edit/:id" element={<AdvertisementFormPage />} />
+                {/* Rota para criar novo anúncio - DEVE VIR PRIMEIRO */}
+                <Route path="/advertisements/new" element={<AdvertisementFormPage />} />
+                
+                {/* Rotas para editar anúncio - ESPECÍFICA */}
+                <Route path="/advertisements/edit/:id" element={<AdvertisementEditPage />} />
+                
+                {/* Rotas para detalhes - MÚLTIPLAS OPÇÕES PARA COMPATIBILIDADE */}
+                <Route path="/advertisements/detalhes/:id" element={<AnunciosDetalhes />} />
+                <Route path="/advertisements/details/:id" element={<AnunciosDetalhes />} />
+                <Route path="/AnunciosDetalhes/:id" element={<AnunciosDetalhes />} />
+                
+                {/* Rota sem ID - mostra página de detalhes (vai mostrar erro ou primeiro anúncio) */}
+                <Route path="/AnunciosDetalhes" element={<AnunciosDetalhes />} />
+                
+                {/* Rota para listar todos os anúncios */}
+                <Route path="/advertisements" element={<AdvertisementsPage />} />
+                
+                {/* Rota genérica para visualizar anúncio (FALLBACK - deve vir por último) */}
+                <Route path="/advertisements/:id" element={<AnunciosDetalhes />} />
 
                 {/* Rotas para regras */}
                 <Route path="/rules" element={<RuleList />} />

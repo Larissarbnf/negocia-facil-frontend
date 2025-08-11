@@ -33,7 +33,6 @@ const createAuthHeaders = () => {
 const handleApiError = async (response, operation = 'operação') => {
     console.log(`📡 Status da resposta: ${response.status} ${response.statusText}`);
 
-    // 🎯 ADICIONAR MAIS DEBUG PARA RESPOSTAS DE ERRO
     try {
         const errorText = await response.text();
         console.error(`❌ Texto completo da resposta de erro:`, errorText);
@@ -46,10 +45,6 @@ const handleApiError = async (response, operation = 'operação') => {
 
         if (response.status === 403) {
             console.error('🚫 Erro 403: Acesso negado');
-            console.error('🔍 Verificar:');
-            console.error('   - Token está sendo enviado corretamente?');
-            console.error('   - Usuário tem a role necessária?');
-            console.error('   - Configuração do Spring Security está correta?');
             throw new Error('Acesso negado. Você não tem permissão para esta operação.');
         }
 
@@ -65,73 +60,77 @@ const handleApiError = async (response, operation = 'operação') => {
 };
 
 export const AdvertisementAPI = {
-    // POST /advertisements/create - Criar novo anúncio
-    async create(advertisement) {
+    // GET /advertisements/{id} - Buscar anúncio específico (VERSÃO MELHORADA)
+    async getById(id) {
         try {
-            console.log('🔍 DEBUG COMPLETO DA CRIAÇÃO:');
-            console.log('📍 URL que será chamada:', `${BASE_URL}/create`);
-            console.log('📝 Dados originais recebidos:', advertisement);
+            console.log(`🔍 Buscando anúncio com ID: ${id}`);
+            console.log(`📍 URL que será chamada: ${BASE_URL}/${id}`);
 
-            // Debug do token
-            const token = getAuthToken();
-            console.log('🔑 Token existe:', !!token);
-            if (token) {
-                console.log('🔑 Token (primeiros 50 chars):', token.substring(0, 50) + '...');
-                console.log('📏 Tamanho do token:', token.length);
-            }
-
-            if (!token) {
-                throw new Error('⚠️ Token de autenticação não encontrado. Faça login primeiro.');
-            }
-
-            // 🎯 CORREÇÃO: Dados enviados ao backend no formato esperado
-            const requestData = {
-                description: advertisement.description,
-                advertiser: {
-                    id: advertisement.advertiser?.id || advertisement.advertiserId || 2  // Usando usuário ID 2 como fallback
-                },
-                products: advertisement.products || []
-            };
-
-            console.log('📤 Dados que serão enviados para o backend:', requestData);
-
-            // Debug dos headers
-            const headers = createAuthHeaders();
-            console.log('📋 Headers que serão enviados:', headers);
-
-            console.log('🚀 Iniciando requisição POST...');
-            
-            const response = await fetch(`${BASE_URL}/create`, {
-                method: 'POST',
-                headers,
-                body: JSON.stringify(requestData),
+            const response = await fetch(`${BASE_URL}/${id}`, {
+                method: 'GET',
+                headers: createAuthHeaders(),
             });
 
-            console.log('📡 Resposta recebida:');
-            console.log('   - Status:', response.status);
-            console.log('   - Status Text:', response.statusText);
-            console.log('   - Headers:', [...response.headers.entries()]);
+            console.log('📡 Resposta recebida:', {
+                status: response.status,
+                statusText: response.statusText,
+                ok: response.ok
+            });
 
             if (!response.ok) {
-                console.error('❌ Resposta não OK, chamando handleApiError...');
-                await handleApiError(response, 'criação do anúncio');
+                await handleApiError(response, 'busca do anúncio');
             }
 
             const data = await response.json();
-            console.log('✅ Anúncio criado com sucesso:', data);
+            console.log('📦 DADOS COMPLETOS DO ANÚNCIO:', data);
+            
+            // 🎯 LOGS DETALHADOS PARA DEBUG DOS PROBLEMAS
+            console.log('🔍 ANÁLISE DETALHADA DOS DADOS:');
+            console.log('='.repeat(50));
+            
+            // Debug do anunciante
+            console.log('👤 DADOS DO ANUNCIANTE:');
+            console.log('   - advertiser objeto completo:', data.advertiser);
+            if (data.advertiser) {
+                console.log('   - advertiser.id:', data.advertiser.id);
+                console.log('   - advertiser.name:', data.advertiser.name);
+                console.log('   - advertiser.username:', data.advertiser.username);
+                console.log('   - advertiser.firstName:', data.advertiser.firstName);
+                console.log('   - advertiser.lastName:', data.advertiser.lastName);
+                console.log('   - advertiser.fullName:', data.advertiser.fullName);
+                console.log('   - advertiser.email:', data.advertiser.email);
+            }
+            
+            // Debug do WhatsApp
+            console.log('📱 DADOS DO WHATSAPP:');
+            console.log('   - whatsappNumber (raiz):', data.whatsappNumber);
+            console.log('   - whatsapp (raiz):', data.whatsapp);
+            console.log('   - phone (raiz):', data.phone);
+            if (data.advertiser) {
+                console.log('   - advertiser.whatsappNumber:', data.advertiser.whatsappNumber);
+                console.log('   - advertiser.whatsapp:', data.advertiser.whatsapp);
+                console.log('   - advertiser.phone:', data.advertiser.phone);
+                console.log('   - advertiser.phoneNumber:', data.advertiser.phoneNumber);
+                console.log('   - advertiser.celular:', data.advertiser.celular);
+                console.log('   - advertiser.telefone:', data.advertiser.telefone);
+            }
+            
+            // Debug de outros campos importantes
+            console.log('📋 OUTROS DADOS IMPORTANTES:');
+            console.log('   - title:', data.title);
+            console.log('   - description:', data.description);
+            console.log('   - status:', data.status);
+            console.log('   - createdAt:', data.createdAt);
+            console.log('   - images:', data.images ? data.images.length : 0, 'imagens');
+            console.log('   - products:', data.products ? data.products.length : 0, 'produtos');
+            console.log('   - location:', data.location);
+            
+            console.log('='.repeat(50));
 
             return data;
 
         } catch (error) {
-            console.error('💥 ERRO COMPLETO na criação do anúncio:');
-            console.error('   - Tipo:', error.name);
-            console.error('   - Mensagem:', error.message);
-            console.error('   - Stack:', error.stack);
-            
-            if (error.name === 'TypeError' && error.message.includes('fetch')) {
-                throw new Error('Erro de conexão com o servidor. Verifique se a API está rodando na porta 8080.');
-            }
-            
+            console.error('💥 Erro ao buscar anúncio:', error);
             throw error;
         }
     },
@@ -175,27 +174,45 @@ export const AdvertisementAPI = {
         }
     },
 
-    // GET /advertisements/{id} - Buscar anúncio específico
-    async getById(id) {
+    // POST /advertisements/create - Criar novo anúncio
+    async create(advertisement) {
         try {
-            console.log(`🔍 Buscando anúncio com ID: ${id}`);
+            console.log('🔍 DEBUG COMPLETO DA CRIAÇÃO:');
+            console.log('📍 URL que será chamada:', `${BASE_URL}/create`);
+            console.log('📝 Dados originais recebidos:', advertisement);
 
-            const response = await fetch(`${BASE_URL}/${id}`, {
-                method: 'GET',
+            const token = getAuthToken();
+            if (!token) {
+                throw new Error('⚠️ Token de autenticação não encontrado. Faça login primeiro.');
+            }
+
+            const requestData = {
+                description: advertisement.description,
+                advertiser: {
+                    id: advertisement.advertiser ? advertisement.advertiser.id : (advertisement.advertiserId || 2)
+                },
+                products: advertisement.products || []
+            };
+
+            console.log('📤 Dados que serão enviados para o backend:', requestData);
+
+            const response = await fetch(`${BASE_URL}/create`, {
+                method: 'POST',
                 headers: createAuthHeaders(),
+                body: JSON.stringify(requestData),
             });
 
             if (!response.ok) {
-                await handleApiError(response, 'busca do anúncio');
+                await handleApiError(response, 'criação do anúncio');
             }
 
             const data = await response.json();
-            console.log('✅ Anúncio encontrado:', data);
+            console.log('✅ Anúncio criado com sucesso:', data);
 
             return data;
 
         } catch (error) {
-            console.error('💥 Erro ao buscar anúncio:', error);
+            console.error('💥 ERRO COMPLETO na criação do anúncio:', error);
             throw error;
         }
     },
@@ -285,7 +302,7 @@ export const AdvertisementAPI = {
             console.log('🔤 Primeiros 50 caracteres:', token.substring(0, 50) + '...');
             console.log('🔤 Últimos 50 caracteres:', '...' + token.substring(token.length - 50));
             
-            // Tentar decodificar o JWT (apenas para debug - não usar em produção)
+            // Tentar decodificar o JWT (apenas para debug)
             try {
                 const parts = token.split('.');
                 if (parts.length === 3) {
@@ -305,7 +322,7 @@ export const AdvertisementAPI = {
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
             const value = localStorage.getItem(key);
-            console.log(`  ${key}:`, value?.length > 100 ? value.substring(0, 100) + '...' : value);
+            console.log(`  ${key}:`, value && value.length > 100 ? value.substring(0, 100) + '...' : value);
         }
     }
 };

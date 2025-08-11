@@ -74,9 +74,10 @@ function AdvertisementsPage() {
         }
     };
 
+    // CORREÇÃO AQUI: Mudança na função handleEdit
     const handleEdit = (id) => {
         console.log(`✏️ Editando anúncio ${id}`);
-        navigate(`/advertisements/edit/${id}`);
+        navigate(`/advertisements/edit/${id}`); // Rota corrigida com o ID
     };
 
     const handleNewAdvertisement = () => {
