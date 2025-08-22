@@ -1,98 +1,425 @@
-/* Adicione estes estilos ao seu AdvertisementFormPage.css */
-
-/* Banner informativo do WhatsApp */
-.whatsapp-info-banner {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 16px 20px;
-    background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
-    border: 1px solid #c3e6cb;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.info-icon {
-    font-size: 24px;
-    flex-shrink: 0;
-}
-
-.info-content h3 {
-    margin: 0 0 5px 0;
-    color: #155724;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.info-content p {
+/* Reset e Base */
+* {
     margin: 0;
-    color: #155724;
-    font-size: 14px;
-    line-height: 1.4;
-}
-
-/* Estilos para o formulário com WhatsApp */
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #495057;
-    font-size: 14px;
-}
-
-.form-group input[type="text"],
-.form-group textarea {
-    width: 100%;
-    padding: 12px 16px;
-    border: 2px solid #e9ecef;
-    border-radius: 8px;
-    font-size: 14px;
-    transition: border-color 0.3s ease;
+    padding: 0;
     box-sizing: border-box;
 }
 
-.form-group input[type="text"]:focus,
-.form-group textarea:focus {
+/* Container Principal */
+.ads-page-container {
+    display: flex;
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+.ads-page-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.header-info h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a202c;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.header-icon {
+    font-size: 2.25rem;
+}
+
+.header-info p {
+    font-size: 1.125rem;
+    color: #718096;
+    font-weight: 400;
+}
+
+.stat-badge {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 4px 14px 0 rgba(102, 126, 234, 0.39);
+}
+
+/* Barra de Filtros */
+.filters-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 280px;
+}
+
+.search-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #9ca3af;
+    z-index: 2;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 3rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: white;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.search-input:focus {
     outline: none;
-    border-color: #25D366;
-    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
-.form-hint {
-    display: block;
-    margin-top: 5px;
-    color: #6c757d;
-    font-size: 12px;
-    font-style: italic;
+.clear-btn {
+    position: absolute;
+    right: 0.75rem;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Responsividade para o banner */
-@media (max-width: 768px) {
-    .whatsapp-info-banner {
-        flex-direction: column;
-        text-align: center;
-        padding: 15px;
-    }
-    
-    .info-content h3 {
-        font-size: 15px;
-    }
-    
-    .info-content p {
-        font-size: 13px;
-    }
+.clear-btn:hover {
+    background: #dc2626;
+    transform: scale(1.1);
 }
 
-/* Animação de entrada para o banner */
-@keyframes slideInDown {
+.sort-select {
+    padding: 0.875rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: #374151;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+}
+
+.sort-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Estados de Error e Loading */
+.error-banner {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.error-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.error-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #ef4444;
+    flex-shrink: 0;
+}
+
+.error-content div h4 {
+    color: #991b1b;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.error-content div p {
+    color: #7f1d1d;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.retry-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: auto;
+}
+
+.retry-btn:hover {
+    background: #dc2626;
+}
+
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+}
+
+.loading-spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 3px solid #e5e7eb;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+.loading-state h3 {
+    color: #374151;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.loading-state p {
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+/* Estado Vazio */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+    padding: 2rem;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.6;
+}
+
+.empty-state h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.75rem;
+}
+
+.empty-state p {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    max-width: 500px;
+    line-height: 1.5;
+}
+
+.clear-search-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.clear-search-btn:hover {
+    background: #5a67d8;
+    transform: translateY(-1px);
+}
+
+/* Grid de Anúncios */
+.ads-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Card de Anúncio */
+.ad-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #f3f4f6;
+    position: relative;
+}
+
+.ad-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: #667eea;
+}
+
+.ad-card:hover .view-details {
+    color: #667eea;
+    transform: translateX(4px);
+}
+
+.ad-card-header {
+    padding: 1.25rem 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.ad-id {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 0.375rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+}
+
+.ad-date {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-weight: 500;
+}
+
+.ad-card-body {
+    padding: 0 1.5rem 1.25rem;
+}
+
+.ad-description {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.ad-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.products-count {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.products-count svg {
+    width: 1rem;
+    height: 1rem;
+    color: #9ca3af;
+}
+
+.ad-card-footer {
+    padding: 1rem 1.5rem;
+    background: #f9fafb;
+    border-top: 1px solid #f3f4f6;
+}
+
+.view-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6b7280;
+    transition: all 0.2s ease;
+}
+
+.view-details svg {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.2s ease;
+}
+
+/* Resultados da Busca */
+.search-results {
+    text-align: center;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Animações */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.ad-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -100,6 +427,164 @@
     }
 }
 
-.whatsapp-info-banner {
-    animation: slideInDown 0.5s ease-out;
+/* Responsividade */
+@media (max-width: 1024px) {
+    .ads-page-content {
+        padding: 1.5rem;
+    }
+    
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .header-info h1 {
+        font-size: 2rem;
+    }
+    
+    .ads-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .ads-page-content {
+        padding: 1rem;
+    }
+    
+    .page-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+    }
+    
+    .header-info h1 {
+        font-size: 1.75rem;
+    }
+    
+    .header-icon {
+        font-size: 1.75rem;
+    }
+    
+    .filters-bar {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .search-box {
+        min-width: auto;
+    }
+    
+    .sort-select {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .ads-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .ad-card-header,
+    .ad-card-body {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .ad-card-footer {
+        padding: 0.75rem 1rem;
+    }
+    
+    .error-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .retry-btn {
+        margin-left: 0;
+        align-self: stretch;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-info h1 {
+        font-size: 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .ad-description {
+        font-size: 1rem;
+    }
+    
+    .empty-icon {
+        font-size: 3rem;
+    }
+    
+    .empty-state h3 {
+        font-size: 1.25rem;
+    }
+    
+    .empty-state p {
+        font-size: 0.875rem;
+    }
+}
+
+/* Estados de focus melhorados para acessibilidade */
+.ad-card:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+.search-input:focus,
+.sort-select:focus,
+.retry-btn:focus,
+.clear-search-btn:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Hover states aprimorados */
+.sort-select:hover {
+    border-color: #d1d5db;
+}
+
+.search-input:hover {
+    border-color: #d1d5db;
+}
+
+/* Melhorias de contraste */
+.ad-card:hover .ad-id {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+.ad-card:hover .ad-description {
+    color: #111827;
+}
+
+/* Smooth scrolling */
+.ads-page-content {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+.ads-page-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ads-page-content::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.ads-page-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.ads-page-content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }

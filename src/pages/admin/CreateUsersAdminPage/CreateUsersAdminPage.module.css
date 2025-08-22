@@ -17,7 +17,7 @@
 }
 
 .header h1 {
-    color: #2c3e50;
+    color: white;
     font-size: 2rem;
     font-weight: 600;
     margin: 0;
@@ -25,7 +25,7 @@
 
 .addButton {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    color: #000000;
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 8px;
@@ -59,7 +59,7 @@
 }
 
 .formHeader h2 {
-    color: #2c3e50;
+    color: #000000;
     font-size: 1.5rem;
     font-weight: 500;
     margin: 0;
@@ -74,7 +74,7 @@
 }
 
 .usersContainer h2 {
-    color: #2c3e50;
+    color: #000000;
     font-size: 1.5rem;
     font-weight: 500;
     margin: 0 0 1.5rem 0;
@@ -108,16 +108,35 @@
 }
 
 .userInfo h3 {
-    color: #2c3e50;
+    color: #000000;
     font-size: 1.2rem;
     font-weight: 600;
     margin: 0 0 0.5rem 0;
 }
 
 .userEmail {
-    color: #6c757d;
+    color: #000000;
     font-size: 0.9rem;
     margin: 0 0 0.75rem 0;
+}
+
+.userEnrollment {
+    color: #000000;
+    font-size: 0.9rem;
+    margin: 0 0 0.75rem 0;
+}
+
+.userWhatsapp {
+    color: #000000;
+    font-size: 0.9rem;
+    margin: 0 0 0.75rem 0;
+}
+
+.userRoles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .userRole {
@@ -128,17 +147,18 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    color: #000000;
 }
 
-.userRole.admin {
+.userRole.role_admin {
     background: #e8f5e8;
-    color: #2e7d2e;
+    color: #000000;
     border: 1px solid #c3e6c3;
 }
 
-.userRole.user {
+.userRole.role_user {
     background: #e3f2fd;
-    color: #1565c0;
+    color: #000000;
     border: 1px solid #bbdefb;
 }
 
@@ -156,37 +176,41 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    color: #000000;
 }
 
 .editButton {
     background: #17a2b8;
-    color: white;
+    color: #000000;
 }
 
 .editButton:hover {
     background: #138496;
     transform: translateY(-1px);
+    color: #000000;
 }
 
 .deleteButton {
     background: #dc3545;
-    color: white;
+    color: #000000;
 }
 
 .deleteButton:hover {
     background: #c82333;
     transform: translateY(-1px);
+    color: #000000;
 }
 
 .emptyState {
     text-align: center;
     padding: 3rem 1rem;
-    color: #6c757d;
+    color: #000000;
 }
 
 .emptyState p {
     font-size: 1.1rem;
     margin: 0;
+    color: #000000;
 }
 
 .accessDenied {
@@ -195,17 +219,18 @@
     border: 1px solid #ffeaa7;
     border-radius: 8px;
     padding: 2rem;
-    color: #856404;
+    color: #000000;
 }
 
 .accessDenied h2 {
-    color: #856404;
+    color: #000000;
     margin: 0 0 1rem 0;
 }
 
 .accessDenied p {
     margin: 0;
     font-size: 1.1rem;
+    color: #000000;
 }
 
 .loading {
@@ -214,7 +239,7 @@
     align-items: center;
     height: 200px;
     font-size: 1.2rem;
-    color: #6c757d;
+    color: #000000;
 }
 
 /* Responsividade */
@@ -232,6 +257,7 @@
     
     .header h1 {
         font-size: 1.5rem;
+        color: white;
     }
     
     .usersGrid {

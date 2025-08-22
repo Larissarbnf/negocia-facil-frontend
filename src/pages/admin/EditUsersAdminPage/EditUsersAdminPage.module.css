@@ -1,23 +1,456 @@
-.editUsersAdminPage {
-    display: flex;
-    flex-direction: row;
-    column-gap: 50px;
-}
-
+/* Container principal da página */
 .mainContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 600px;
-    min-height: 700px;
-    gap: 12px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background-attachment: fixed;
+  padding: 40px 24px;
+  position: relative;
+  overflow-x: hidden;
 }
 
+.mainContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="glow1" cx="50%" cy="50%"><stop offset="0%" stop-color="%23fff" stop-opacity="0.15"/><stop offset="100%" stop-color="%23fff" stop-opacity="0"/></radialGradient></defs><circle cx="150" cy="150" r="120" fill="url(%23glow1)"/><circle cx="850" cy="250" r="180" fill="url(%23glow1)"/><circle cx="300" cy="800" r="100" fill="url(%23glow1)"/><circle cx="750" cy="750" r="150" fill="url(%23glow1)"/></svg>') no-repeat;
+  background-size: cover;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Header do formulário */
 .formHeader {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.formHeader h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 12px;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  letter-spacing: -0.025em;
+}
+
+.formHeader p {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: 0.025em;
+}
+
+/* Estados de carregamento e erro */
+.loading {
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.loading p {
+  font-size: 1.125rem;
+  color: #475569;
+  margin: 0;
+  font-weight: 500;
+}
+
+.loading::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 24px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mensagens de erro */
+.error, .accessDenied {
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(254, 242, 242, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 
+    0 20px 25px -5px rgba(220, 38, 38, 0.1),
+    0 10px 10px -5px rgba(220, 38, 38, 0.04),
+    0 0 0 1px rgba(254, 202, 202, 0.3);
+  border: 1px solid rgba(252, 165, 165, 0.5);
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.8s ease-out, shake 0.6s ease-in-out 0.2s;
+}
+
+.error h3, .accessDenied h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #dc2626;
+  margin: 0 0 16px;
+}
+
+.error p, .accessDenied p {
+  font-size: 1rem;
+  color: #991b1b;
+  margin: 0 0 24px;
+  line-height: 1.6;
+}
+
+.error p:last-of-type, .accessDenied p:last-of-type {
+  margin-bottom: 32px;
+}
+
+/* Botão voltar */
+.backButton {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 15px 0 rgba(220, 38, 38, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.025em;
+}
+
+.backButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.6s ease;
+}
+
+.backButton:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.backButton:hover {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+  box-shadow: 
+    0 6px 20px 0 rgba(220, 38, 38, 0.4),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.backButton:active {
+  transform: translateY(0);
+}
+
+/* Animações de entrada */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+  20%, 40%, 60%, 80% { transform: translateX(8px); }
+}
+
+/* Wrapper para o formulário */
+.formWrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* Estilos para campos do formulário */
+.field {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.input, .textarea, .select {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  color: #1e293b;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.input::placeholder, .textarea::placeholder {
+  color: #64748b;
+  font-weight: 300;
+}
+
+.input:focus, .textarea:focus, .select:focus {
+  outline: none;
+  border-color: #6366f1;
+  background: #ffffff;
+  box-shadow: 
+    0 0 0 4px rgba(99, 102, 241, 0.1),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.input:hover:not(:focus), .textarea:hover:not(:focus), .select:hover:not(:focus) {
+  border-color: #cbd5e1;
+  background: #ffffff;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Efeito de onda no foco */
+.field::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.field:focus-within::after {
+  width: 100%;
+}
+
+/* Botões de ação */
+.actionButtons {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+  justify-content: flex-end;
+}
+
+.primaryButton, .secondaryButton {
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.025em;
+  min-width: 140px;
+}
+
+.primaryButton::before, .secondaryButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.6s ease;
+}
+
+.primaryButton:hover::before, .secondaryButton:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.primaryButton {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  box-shadow: 
+    0 4px 15px 0 rgba(99, 102, 241, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.1);
+}
+
+.primaryButton:hover {
+  background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
+  box-shadow: 
+    0 6px 20px 0 rgba(99, 102, 241, 0.4),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #475569;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+}
+
+.secondaryButton:hover {
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.primaryButton:active, .secondaryButton:active {
+  transform: translateY(0);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 24px 16px;
+  }
+
+  .formHeader h2 {
+    font-size: 2rem;
+  }
+
+  .formWrapper, .loading, .error, .accessDenied {
+    padding: 28px;
+    border-radius: 16px;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+  }
+
+  .primaryButton, .secondaryButton {
     width: 100%;
-    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .formHeader h2 {
+    font-size: 1.75rem;
+  }
+
+  .formWrapper, .loading, .error, .accessDenied {
+    padding: 24px;
+  }
+
+  .input, .textarea, .select {
+    padding: 14px 16px;
+  }
+
+  .primaryButton, .secondaryButton, .backButton {
+    padding: 12px 24px;
+  }
+}
+
+/* Animações para usuários que preferem movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Modo escuro automático */
+@media (prefers-color-scheme: dark) {
+  .mainContent {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+  }
+
+  .formWrapper, .loading {
+    background: rgba(30, 27, 75, 0.9);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .formHeader h2 {
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .label {
+    color: #e2e8f0;
+  }
+
+  .input, .textarea, .select {
+    background: rgba(30, 41, 59, 0.5);
+    border-color: #475569;
+    color: #e2e8f0;
+  }
+
+  .input::placeholder, .textarea::placeholder {
+    color: #94a3b8;
+  }
 }

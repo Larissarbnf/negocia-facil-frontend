@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Outlet } from "react-router-dom"; 
 import { useState, useEffect } from "react";
 import SidebarLayout from "../../../layouts/admin/SidebarLayout/SidebarLayout.jsx";
 import EditProfileModal from "./EditProfileModal/EditProfileModal.jsx";
@@ -43,7 +43,6 @@ export default function AdminHomePage() {
 
             if (response.ok) {
                 const apiUserData = await response.json();
-                console.log('✅ Dados do usuário da API:', apiUserData);
                 
                 // Atualizar localStorage com dados da API
                 localStorage.setItem('user', JSON.stringify(apiUserData));
@@ -140,29 +139,38 @@ export default function AdminHomePage() {
                             
                             <div className={styles.userMetadata}>
                                 <div className={styles.metadataItem}>
-                                    <strong>📧 Email:</strong> {userData?.email || 'Não informado'}
+                                    <span className={styles.metadataIcon}>👤</span>
+                                    <div className={styles.metadataContent}>
+                                        <span className={styles.metadataLabel}>Username</span>
+                                        <span className={styles.metadataValue}>{userData?.username || 'Não informado'}</span>
+                                    </div>
                                 </div>
                                 <div className={styles.metadataItem}>
-                                    <strong>👤 Username:</strong> {userData?.username || 'Não informado'}
+                                    <span className={styles.metadataIcon}>📱</span>
+                                    <div className={styles.metadataContent}>
+                                        <span className={styles.metadataLabel}>WhatsApp</span>
+                                        <span className={styles.metadataValue}>{
+                                            userData?.whatsappNumber 
+                                                ? (() => {
+                                                    const number = userData.whatsappNumber;
+                                                    const cleanNumber = number.replace(/\D/g, '');
+                                                    if (cleanNumber.length >= 11) {
+                                                        return `(${cleanNumber.slice(0, 2)}) ${cleanNumber.slice(2, 7)}-${cleanNumber.slice(7, 11)}`;
+                                                    } else if (cleanNumber.length >= 10) {
+                                                        return `(${cleanNumber.slice(0, 2)}) ${cleanNumber.slice(2, 6)}-${cleanNumber.slice(6, 10)}`;
+                                                    }
+                                                    return number;
+                                                })()
+                                                : 'Não informado'
+                                        }</span>
+                                    </div>
                                 </div>
                                 <div className={styles.metadataItem}>
-                                    <strong>📱 WhatsApp:</strong> {
-                                        userData?.whatsappNumber 
-                                            ? (() => {
-                                                const number = userData.whatsappNumber;
-                                                const cleanNumber = number.replace(/\D/g, '');
-                                                if (cleanNumber.length >= 11) {
-                                                    return `(${cleanNumber.slice(0, 2)}) ${cleanNumber.slice(2, 7)}-${cleanNumber.slice(7, 11)}`;
-                                                } else if (cleanNumber.length >= 10) {
-                                                    return `(${cleanNumber.slice(0, 2)}) ${cleanNumber.slice(2, 6)}-${cleanNumber.slice(6, 10)}`;
-                                                }
-                                                return number;
-                                            })()
-                                            : 'Não informado'
-                                    }
-                                </div>
-                                <div className={styles.metadataItem}>
-                                    <strong>🆔 ID:</strong> {userData?.id || 'N/A'}
+                                    <span className={styles.metadataIcon}>🆔</span>
+                                    <div className={styles.metadataContent}>
+                                        <span className={styles.metadataLabel}>ID do Usuário</span>
+                                        <span className={styles.metadataValue}>#{userData?.id || 'N/A'}</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -265,16 +273,6 @@ export default function AdminHomePage() {
                     </div>
                 </div>
 
-                {/* Debug info (remover em produção) */}
-                <details className={styles.debugSection}>
-                    <summary className={styles.debugSummary}>
-                        🐛 Debug - Dados do localStorage (clique para expandir)
-                    </summary>
-                    <pre className={styles.debugContent}>
-                        {JSON.stringify(userData, null, 2)}
-                    </pre>
-                </details>
-
                 {/* Modal de edição de perfil */}
                 <EditProfileModal 
                     isOpen={isEditModalOpen}
@@ -283,6 +281,7 @@ export default function AdminHomePage() {
                     onSave={handleProfileSaved}
                 />
 
+                {/* Outlet - Aqui é onde as rotas filhas serão renderizadas */}
                 <Outlet />
             </div>
         </SidebarLayout>

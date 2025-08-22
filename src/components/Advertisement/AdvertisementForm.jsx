@@ -12,7 +12,6 @@ export default function AdvertisementForm({ advertisement, onUpdate, isNew }) {
     const [whatsappNumber, setWhatsappNumber] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    // Garantir que advertisement existe antes de acessar createdAt
     const datetime = advertisement?.createdAt ? new Date(advertisement.createdAt) : new Date();
 
     useEffect(() => {
@@ -23,65 +22,33 @@ export default function AdvertisementForm({ advertisement, onUpdate, isNew }) {
         }
     }, [advertisement]);
 
-    // Função para obter dados completos do usuário atual - COM DEBUG
     const getCurrentUserData = () => {
         try {
-            // 🎯 DEBUG - Verificar TUDO no localStorage
-            console.log('=== DEBUG LOCALSTORAGE ===');
-            console.log('localStorage completo:', localStorage);
-            
-            // Verificar todas as chaves possíveis
-            const allKeys = Object.keys(localStorage);
-            console.log('🔍 Todas as chaves no localStorage:', allKeys);
-            
-            allKeys.forEach(key => {
-                console.log(`🔑 ${key}:`, localStorage.getItem(key));
-            });
-            
             const userData = localStorage.getItem('user');
-            console.log('🔍 userData raw:', userData);
             
             if (userData) {
                 const parsed = JSON.parse(userData);
-                console.log('🔍 userData parsed:', parsed);
-                console.log('🔍 parsed.id:', parsed.id);
-                console.log('🔍 parsed.userId:', parsed.userId);
-                console.log('🔍 typeof parsed.id:', typeof parsed.id);
-                console.log('🔍 typeof parsed.userId:', typeof parsed.userId);
-                
                 const finalId = parsed.id || parsed.userId || 1;
-                console.log('🔍 finalId calculado:', finalId, typeof finalId);
                 
-                const result = {
+                return {
                     id: finalId,
                     name: parsed.fullName || parsed.full_name || parsed.name || parsed.username || 'Usuário',
                     email: parsed.email || null,
                     username: parsed.username || parsed.email || null
                 };
-                
-                console.log('🔍 Resultado final getCurrentUserData:', result);
-                return result;
             }
             
-            // Fallback para dados diretos no localStorage
-            console.log('🔍 Tentando fallback...');
             const userId = localStorage.getItem('userId') || localStorage.getItem('currentUserId') || 1;
             const userName = localStorage.getItem('userName') || localStorage.getItem('fullName') || 'Usuário';
             
-            console.log('🔍 userId do fallback:', userId);
-            console.log('🔍 userName do fallback:', userName);
-            
-            const fallbackResult = {
+            return {
                 id: parseInt(userId),
                 name: userName,
                 email: null,
                 username: null
             };
-            
-            console.log('🔍 Resultado fallback:', fallbackResult);
-            return fallbackResult;
         } catch (e) {
-            console.error('❌ Erro ao obter dados do usuário:', e);
+            console.error('Erro ao obter dados do usuário:', e);
             return {
                 id: 1,
                 name: 'Usuário',
@@ -91,14 +58,11 @@ export default function AdvertisementForm({ advertisement, onUpdate, isNew }) {
         }
     };
 
-    // Função para validar e formatar número de WhatsApp
     const formatWhatsApp = (number) => {
         if (!number) return "";
         
-        // Remove tudo que não é número
         const cleanNumber = number.replace(/\D/g, '');
         
-        // Aplica a máscara (XX) XXXXX-XXXX
         if (cleanNumber.length <= 11) {
             return cleanNumber.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
         }
@@ -124,7 +88,6 @@ export default function AdvertisementForm({ advertisement, onUpdate, isNew }) {
             return;
         }
 
-        // Validação do WhatsApp (opcional, mas se preenchido deve estar válido)
         if (whatsappNumber && whatsappNumber.replace(/\D/g, '').length < 10) {
             alert("Número do WhatsApp deve ter pelo menos 10 dígitos!");
             return;
@@ -134,13 +97,12 @@ export default function AdvertisementForm({ advertisement, onUpdate, isNew }) {
 
         try {
             const userData = getCurrentUserData();
-            console.log('👤 Dados do usuário atual (FINAL):', userData);
 
             const advertisementData = {
                 description: description.trim(),
                 products,
-                whatsappNumber: whatsappNumber.replace(/\D/g, ''), // Salva apenas números
-                whatsapp: whatsappNumber.replace(/\D/g, ''), // Para compatibilidade
+                whatsappNumber: whatsappNumber.replace(/\D/g, ''),
+                whatsapp: whatsappNumber.replace(/\D/g, ''),
                 advertiser: { 
                     id: userData.id,
                     name: userData.name,
@@ -151,10 +113,6 @@ export default function AdvertisementForm({ advertisement, onUpdate, isNew }) {
                 advertiserId: userData.id,
                 createdAt: advertisement?.createdAt || new Date().toISOString()
             };
-
-            console.log('📤 Dados que serão enviados (FINAL):', advertisementData);
-            console.log('📤 advertisementData.advertiser.id:', advertisementData.advertiser.id);
-            console.log('📤 advertisementData.advertiserId:', advertisementData.advertiserId);
 
             if (isNew) {
                 await onUpdate(advertisementData);
@@ -176,12 +134,12 @@ export default function AdvertisementForm({ advertisement, onUpdate, isNew }) {
         setProducts(products.filter(product => product.id !== productId));
     };
 
-    // Loading state
     if (!advertisement && !isNew) {
         return (
             <div className="advertisement-form">
-                <div className="loading-spinner">
-                    <p>Carregando anúncio...</p>
+                <div className="loading-container">
+                    <div className="loading-spinner"></div>
+                    <p className="loading-text">Carregando anúncio...</p>
                 </div>
             </div>
         );
@@ -189,106 +147,182 @@ export default function AdvertisementForm({ advertisement, onUpdate, isNew }) {
 
     return (
         <div className="advertisement-form">
-            {/* DEBUG - Mostrar dados do usuário na tela */}
-            <div style={{ background: '#f0f0f0', padding: '10px', margin: '10px 0', border: '1px solid #ccc' }}>
-                <h4>🐛 DEBUG - Dados do Usuário Atual:</h4>
-                <pre>{JSON.stringify(getCurrentUserData(), null, 2)}</pre>
+            <div className="form-header">
+                <h1 className="form-title">
+                    {isNew ? "✨ Criar Novo Anúncio" : "📝 Editar Anúncio"}
+                </h1>
+                <p className="form-subtitle">
+                    {isNew 
+                        ? "Crie um anúncio atrativo para seus produtos" 
+                        : "Modifique os detalhes do seu anúncio"
+                    }
+                </p>
             </div>
 
-            {/* Informações do anúncio existente */}
             {!isNew && advertisement && (
                 <div className="advertisement-info">
-                    <div className="info-group">
-                        <div className="info-item">
-                            <strong>ID:</strong> {advertisement.id}
+                    <div className="info-header">
+                        <h3>📋 Informações do Anúncio</h3>
+                    </div>
+                    <div className="info-grid">
+                        <div className="info-card">
+                            <div className="info-icon">🆔</div>
+                            <div className="info-content">
+                                <span className="info-label">ID</span>
+                                <span className="info-value">{advertisement.id}</span>
+                            </div>
                         </div>
-                        <div className="info-item">
-                            <strong>Data:</strong> {datetime.toLocaleDateString("pt-BR")}
+                        <div className="info-card">
+                            <div className="info-icon">📅</div>
+                            <div className="info-content">
+                                <span className="info-label">Data</span>
+                                <span className="info-value">{datetime.toLocaleDateString("pt-BR")}</span>
+                            </div>
                         </div>
-                        <div className="info-item">
-                            <strong>Horário:</strong> {datetime.toLocaleTimeString("pt-BR", {
-                                hour: "2-digit",
-                                minute: "2-digit"
-                            })}
+                        <div className="info-card">
+                            <div className="info-icon">🕐</div>
+                            <div className="info-content">
+                                <span className="info-label">Horário</span>
+                                <span className="info-value">{datetime.toLocaleTimeString("pt-BR", {
+                                    hour: "2-digit",
+                                    minute: "2-digit"
+                                })}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* Contador de produtos */}
-            <div className="products-counter">
-                <p>Quantidade de itens no anúncio: <span className="count-badge">{products.length}</span></p>
+            <div className="stats-section">
+                <div className="stat-card">
+                    <div className="stat-icon">📦</div>
+                    <div className="stat-content">
+                        <span className="stat-number">{products.length}</span>
+                        <span className="stat-label">
+                            {products.length === 1 ? "Produto" : "Produtos"} no anúncio
+                        </span>
+                    </div>
+                </div>
             </div>
 
-            {/* Formulário de descrição e contato */}
-            <form className="form-description" onSubmit={updateAdvertisement}>
-                <div className="form-group">
-                    <label htmlFor="description">Descrição *:</label>
-                    <textarea
-                        id="description"
-                        name="description"
-                        value={description}
-                        onChange={e => setDescription(e.target.value)}
-                        placeholder="Digite uma descrição para o anúncio..."
-                        rows={4}
-                        required
-                    />
-                </div>
+            <form className="form-main" onSubmit={updateAdvertisement}>
+                <div className="form-section">
+                    <h3 className="section-title">
+                        <span className="section-icon">📝</span>
+                        Detalhes do Anúncio
+                    </h3>
+                    
+                    <div className="form-group">
+                        <label htmlFor="description" className="form-label">
+                            Descrição do Anúncio <span className="required">*</span>
+                        </label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={description}
+                            onChange={e => setDescription(e.target.value)}
+                            placeholder="Descreva seus produtos de forma atrativa para os clientes..."
+                            className="form-textarea"
+                            rows={4}
+                            required
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="whatsapp">WhatsApp para contato:</label>
-                    <input
-                        type="text"
-                        id="whatsapp"
-                        name="whatsapp"
-                        value={whatsappNumber}
-                        onChange={handleWhatsAppChange}
-                        placeholder="(85) 99999-9999"
-                        maxLength={15}
-                    />
-                    <small className="form-hint">
-                        📱 Opcional - Deixe em branco se não quiser receber contatos via WhatsApp
-                    </small>
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="whatsapp" className="form-label">
+                            <span className="whatsapp-icon">💬</span>
+                            WhatsApp para Contato
+                        </label>
+                        <input
+                            type="text"
+                            id="whatsapp"
+                            name="whatsapp"
+                            value={whatsappNumber}
+                            onChange={handleWhatsAppChange}
+                            placeholder="(85) 99999-9999"
+                            className="form-input"
+                            maxLength={15}
+                        />
+                        <div className="form-hint">
+                            <span className="hint-icon">💡</span>
+                            Opcional - Os clientes poderão entrar em contato via WhatsApp
+                        </div>
+                    </div>
 
-                <Button
-                    type="submit"
-                    text={isLoading ? "Salvando..." : "Salvar"}
-                    disabled={isLoading}
-                />
+                    <div className="form-actions-main">
+                        <Button
+                            type="submit"
+                            text={
+                                isLoading ? (
+                                    <>
+                                        <span className="loading-dots">⟳</span>
+                                        Salvando...
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>💾</span>
+                                        {isNew ? "Criar Anúncio" : "Salvar Alterações"}
+                                    </>
+                                )
+                            }
+                            disabled={isLoading}
+                            className="btn-primary"
+                        />
+                    </div>
+                </div>
             </form>
 
-            {/* Lista de produtos selecionados */}
             {products.length > 0 ? (
-                <div className="selected-products-section">
-                    <h3>Produtos anunciados</h3>
-                    <ProductList
-                        products={products}
-                        onDelete={removeProduct}
-                        showMenuOptions={false}
-                        showTrashButton={true}
-                        showCheckBox={false}
-                    />
+                <div className="products-section">
+                    <div className="section-header">
+                        <h3 className="section-title">
+                            <span className="section-icon">🛍️</span>
+                            Produtos Selecionados
+                        </h3>
+                        <div className="products-badge">{products.length}</div>
+                    </div>
+                    <div className="products-container">
+                        <ProductList
+                            products={products}
+                            onDelete={removeProduct}
+                            showMenuOptions={false}
+                            showTrashButton={true}
+                            showCheckBox={false}
+                        />
+                    </div>
                 </div>
             ) : (
-                <div className="no-products-message">
-                    <p>Nenhum produto anunciado.</p>
+                <div className="empty-products">
+                    <div className="empty-icon">📦</div>
+                    <h3>Nenhum produto selecionado</h3>
+                    <p>Adicione produtos ao seu anúncio usando a seção abaixo</p>
                 </div>
             )}
 
-            {/* Seleção de produtos */}
-            <div className="product-selection-section">
-                <ProductSelection
-                    selectedProducts={products}
-                    onSelect={setProducts}
-                />
+            <div className="selection-section">
+                <div className="section-header">
+                    <h3 className="section-title">
+                        <span className="section-icon">➕</span>
+                        Adicionar Produtos
+                    </h3>
+                </div>
+                <div className="selection-container">
+                    <ProductSelection
+                        selectedProducts={products}
+                        onSelect={setProducts}
+                    />
+                </div>
             </div>
 
-            {/* Botão cancelar */}
-            <div className="form-actions">
+            <div className="form-footer">
                 <Button
                     type="button"
-                    text="Cancelar"
+                    text={
+                        <>
+                            <span>❌</span>
+                            Cancelar
+                        </>
+                    }
                     action={() => navigate("/advertisements")}
                     className="btn-secondary"
                 />

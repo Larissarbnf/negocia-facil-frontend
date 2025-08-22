@@ -10,14 +10,10 @@ const AdvertisementView = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Simular carregamento do anúncio
-        // Substitua por sua chamada real à API
+       
         const fetchAdvertisement = async () => {
             try {
-                // const response = await AdvertisementAPI.getById(id);
-                // setAdvertisement(response);
-                
-                // Dados de exemplo para demonstração
+               
                 setAdvertisement({
                     id: id,
                     description: "Vendo produtos de alta qualidade com ótimos preços!",

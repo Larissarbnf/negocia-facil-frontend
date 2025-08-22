@@ -1,11 +1,10 @@
-import styles from './EditUserForm.module.css'
-import Button from "../Button/Button.jsx"
-import {useState, useEffect} from "react";
-import { ErrorBoundary } from "react-error-boundary"
-import {useNavigate} from "react-router-dom";
+import styles from './EditUserForm.module.css';
+import Button from "../Button/Button.jsx";
+import { useState, useEffect } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { useNavigate } from "react-router-dom";
 
 export default function EditUserForm({ user, action }) {
-
     const navigate = useNavigate();
 
     const [formState, setFormState] = useState({
@@ -38,12 +37,37 @@ export default function EditUserForm({ user, action }) {
     return (
         <ErrorBoundary>
             <form className={styles.form} onSubmit={handleSubmit}>
-                <input name="fullName" value={formState.fullName} onChange={handleChange} required />
-                <input name="username" value={formState.username} onChange={handleChange} required />
-                <input name="enrollmentNumber" value={formState.enrollmentNumber} onChange={handleChange} required />
-                <input name="password" value={formState.password} onChange={handleChange} placeholder="Senha" type="password" required />
-                <Button text="Salvar Alterações" type={"submit"}/>
-                <Button text="Cancelar" action={() => {navigate("/admin/users")}}/>
+                <input 
+                    name="fullName" 
+                    value={formState.fullName} 
+                    onChange={handleChange} 
+                    placeholder="Nome Completo"
+                    required 
+                />
+                <input 
+                    name="username" 
+                    value={formState.username} 
+                    onChange={handleChange} 
+                    placeholder="Nome de Usuário"
+                    required 
+                />
+                <input 
+                    name="enrollmentNumber" 
+                    value={formState.enrollmentNumber} 
+                    onChange={handleChange} 
+                    placeholder="Número de Matrícula"
+                    required 
+                />
+                <input 
+                    name="password" 
+                    value={formState.password} 
+                    onChange={handleChange} 
+                    placeholder="Senha" 
+                    type="password" 
+                    required 
+                />
+                <Button text="Salvar Alterações" type="submit" />
+                <Button text="Cancelar" action={() => navigate("/admin/users")} />
             </form>
         </ErrorBoundary>
     );

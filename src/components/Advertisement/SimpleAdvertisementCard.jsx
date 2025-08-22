@@ -1,125 +1,127 @@
-import React, { useState } from "react";
-import { MoreVertical, Edit, Trash2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './SimpleAdvertisementCard.css';
 
 function SimpleAdvertisementCard({
     id,
     creationTime,
-    itemsCount,
     description,
+    itemsCount,
+    onDelete,
     onEdit,
-    onDelete
+    onViewDetails
 }) {
-    const [showMenu, setShowMenu] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
     const navigate = useNavigate();
+
+    const handleDelete = async (e) => {
+        e.stopPropagation();
+        setIsDeleting(true);
+        try {
+            await onDelete();
+        } finally {
+            setIsDeleting(false);
+        }
+    };
 
     const handleEdit = (e) => {
         e.stopPropagation();
-        setShowMenu(false);
-        if (onEdit && typeof onEdit === 'function') {
-            onEdit();
+        onEdit();
+    };
+
+    // 🔧 CORREÇÃO: Função para redirecionar aos detalhes
+    const handleViewDetails = () => {
+        console.log('🔍 Redirecionando para detalhes do anúncio ID:', id);
+        
+        // Se onViewDetails foi passado como prop, usar ele
+        if (onViewDetails && typeof onViewDetails === 'function') {
+            onViewDetails();
+        } else {
+            // Senão, usar navegação direta
+            navigate(`/advertisements/details/${id}`);
         }
-    };
-
-    const handleDelete = (e) => {
-        e.stopPropagation();
-        setShowMenu(false);
-        if (onDelete && typeof onDelete === 'function') {
-            const confirmDelete = window.confirm(`Tem certeza que deseja excluir o Anúncio ${id}?`);
-            if (confirmDelete) {
-                onDelete(id);
-            }
-        }
-    };
-
-    const toggleMenu = (e) => {
-        e.stopPropagation();
-        setShowMenu(prev => !prev);
-    };
-
-    const closeMenu = () => {
-        setShowMenu(false);
-    };
-
-    // Função para navegar para os detalhes do anúncio
-    const handleCardClick = () => {
-        console.log(`🔍 Navegando para detalhes do anúncio ID: ${id}`);
-        navigate(`/advertisements/details/${id}`);
     };
 
     return (
         <div 
-            className='user-advertisement-card clickable-card'
-            onClick={handleCardClick}
+            className="advertisement-card"
+            onClick={handleViewDetails}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                    handleCardClick();
+                    e.preventDefault();
+                    handleViewDetails();
                 }
             }}
         >
-            <div className='card-content'>
-                <div className='card-header'>
-                    <div className="card-title-section">
-                        <h2>Anúncio #{id}</h2>
-                        <p className="creation-time">Criado em {creationTime}</p>
+            {/* Dica de clique */}
+            <div className="click-hint">
+                Clique para ver detalhes
+            </div>
+
+            {/* Header do Card */}
+            <div className="card-header">
+                <div className="id-badge">
+                    #{String(id).padStart(3, '0')}
+                </div>
+                
+                <div className="status-badge">
+                    <div className="status-dot"></div>
+                    Ativo
+                </div>
+            </div>
+
+            {/* Conteúdo Principal */}
+            <div className="card-content">
+                <h3 className="card-title">
+                    Anúncio #{String(id).padStart(3, '0')}
+                </h3>
+                
+                <p className="card-description">
+                    {description || "Sem descrição disponível"}
+                </p>
+
+                {/* Estatísticas do Anúncio */}
+                <div className="card-stats">
+                    <div className="stat-item">
+                        <span className="stat-value">{itemsCount}</span>
+                        <span className="stat-label">
+                            {itemsCount === 1 ? 'Produto' : 'Produtos'}
+                        </span>
                     </div>
                     
-                    <div
-                        className="advertisement-dropdown"
-                        onMouseLeave={closeMenu}
-                    >
-                        <button
-                            className="menu-trigger"
-                            onClick={toggleMenu}
-                            aria-label="Menu de opções"
-                        >
-                            <MoreVertical size={18} />
-                        </button>
-                        
-                        {showMenu && (
-                            <div className="dropdown-menu">
-                                <button
-                                    className="dropdown-item edit-btn"
-                                    onClick={handleEdit}
-                                >
-                                    <Edit size={14} />
-                                    Editar
-                                </button>
-                                <button
-                                    className="dropdown-item delete-btn"
-                                    onClick={handleDelete}
-                                >
-                                    <Trash2 size={14} />
-                                    Excluir
-                                </button>
-                            </div>
-                        )}
+                    <div className="stat-item">
+                        <span className="stat-value">Criado</span>
+                        <span className="stat-label">{creationTime}</span>
                     </div>
                 </div>
-                
-                <div className='card-subinfo'>
-                    <p className="items-count">
-                        <span className="count-badge">{itemsCount || 0}</span>
-                        {itemsCount === 1 ? ' item no anúncio' : ' itens no anúncio'}
-                    </p>
-                </div>
-                
-                <div className="card-description">
-                    <p>
-                        <strong>Descrição:</strong> 
-                        <span className="description-text">
-                            {description || 'Sem descrição'}
-                        </span>
-                    </p>
-                </div>
+            </div>
 
-                {/* Indicador visual de que o card é clicável */}
-                <div className="click-indicator">
-                    <span>Clique para ver detalhes</span>
-                </div>
+            {/* Ações do Card */}
+            <div className="card-actions" onClick={(e) => e.stopPropagation()}>
+                <button 
+                    className="action-btn btn-edit"
+                    onClick={handleEdit}
+                    aria-label="Editar anúncio"
+                >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                    </svg>
+                    Editar
+                </button>
+                
+                <button 
+                    className={`action-btn btn-delete ${isDeleting ? 'loading' : ''}`}
+                    onClick={handleDelete}
+                    disabled={isDeleting}
+                    aria-label="Excluir anúncio"
+                >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                    </svg>
+                    {isDeleting ? 'Excluindo...' : 'Excluir'}
+                </button>
             </div>
         </div>
     );

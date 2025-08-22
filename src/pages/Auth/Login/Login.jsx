@@ -64,7 +64,7 @@ export default function Login(){
                 
                 if (isAdmin) {
                     console.log("👑 Usuário é admin, redirecionando para admin...");
-                    navigate("/admin/users/register"); // Ou a rota admin que existe
+                    navigate("/admin/users/"); // Ou a rota admin que existe
                 } else {
                     console.log("🧑 Usuário comum, redirecionando para dashboard...");
                     navigate("/admin/users/"); // Ou a rota de usuário comum

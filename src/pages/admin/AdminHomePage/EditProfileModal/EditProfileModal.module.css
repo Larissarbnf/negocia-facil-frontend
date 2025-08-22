@@ -271,6 +271,6 @@
     
     .formGroup input {
         padding: 10px 12px;
-        font-size: 16px; /* Evita zoom no iOS */
+        font-size: 16px; 
     }
 }

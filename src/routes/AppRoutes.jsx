@@ -13,10 +13,14 @@ import AdminHomePage from "../pages/admin/AdminHomePage/AdminHomePage.jsx";
 // Outras páginas
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage.jsx";
 import Home from "../pages/Home.jsx";
+import ProductsPage from "../pages/ProductsPage.jsx";
+
+// Páginas de anúncios
 import AdvertisementsPage from "../pages/AdvertisementsPage.jsx";
+import CriarAnuncio from "../pages/CriarAnuncio.jsx";
 import { AdvertisementFormPage } from "../pages/AdvertisementFormPage.jsx";
 import AdvertisementEditPage from "../pages/AdvertisementEditPage.jsx";
-import ProductsPage from "../pages/ProductsPage.jsx";
+
 
 // Página de detalhes dos anúncios
 import AnunciosDetalhes from "../pages/AnunciosDetalhes.jsx";
@@ -29,12 +33,15 @@ export default function AppRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                {/* Redirecionamento inicial */}
-                <Route path="/" element={<Navigate to="/auth/login" replace />} />
+                {/* Redirecionamento inicial - mantém AnunciosDetalhes */}
+                <Route path="/" element={<Navigate to="/AnunciosDetalhes" replace />} />
 
                 {/* Rotas de autenticação */}
                 <Route path="/auth/login" element={<Login />} />
                 <Route path="/auth/register" element={<Register />} />
+
+                {/* 🎯 ROTA DE DEBUG - TESTE ISOLADO */}
+                <Route path="/debug-create-users" element={<CreateUsersAdminPage />} />
 
                 {/* Rotas do admin */}
                 <Route path="/admin" element={<AdminHomePage />}>
@@ -55,17 +62,18 @@ export default function AppRoutes() {
                 {/* Rotas para editar anúncio - ESPECÍFICA */}
                 <Route path="/advertisements/edit/:id" element={<AdvertisementEditPage />} />
                 
-                {/* Rotas para detalhes - MÚLTIPLAS OPÇÕES PARA COMPATIBILIDADE */}
+                {/* Rotas para detalhes do anúncio */}
                 <Route path="/advertisements/detalhes/:id" element={<AnunciosDetalhes />} />
                 <Route path="/advertisements/details/:id" element={<AnunciosDetalhes />} />
                 <Route path="/AnunciosDetalhes/:id" element={<AnunciosDetalhes />} />
-                
-                {/* Rota sem ID - mostra página de detalhes (vai mostrar erro ou primeiro anúncio) */}
                 <Route path="/AnunciosDetalhes" element={<AnunciosDetalhes />} />
+                
+                {/* Rota principal para CriarAnuncio (gerenciamento) */}
+                <Route path="/CriarAnuncio" element={<CriarAnuncio />} />
                 
                 {/* Rota para listar todos os anúncios */}
                 <Route path="/advertisements" element={<AdvertisementsPage />} />
-                
+
                 {/* Rota genérica para visualizar anúncio (FALLBACK - deve vir por último) */}
                 <Route path="/advertisements/:id" element={<AnunciosDetalhes />} />
 
